@@ -22,4 +22,7 @@ use App\Http\Controllers\Api\AuthenticationController;
 Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
     Route::post('login', [AuthenticationController::class, 'store']);
     Route::post('logout', [AuthenticationController::class, 'destroy'])->middleware('auth:api');
+
+    Route::apiResource('holiday-plans', 'HolidayPlanController');
+    Route::post('holiday-plans/{id}/pdf', 'HolidayPlanController@generatePDF');
 });
