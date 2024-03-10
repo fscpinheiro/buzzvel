@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class HolidayPlan extends Model
 {
     use HasFactory;
+
+    protected $table = 'holiday_plans';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'title', 
+        'description', 
+        'date', 
+        'location', 
+        'participants'
+    ];
 }

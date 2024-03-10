@@ -17,7 +17,11 @@ class HolidayPlanFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'date' => $this->faker->date,
+            'location' => $this->faker->address,
+            'participants' => $this->faker->name,
         ];
     }
 }
