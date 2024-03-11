@@ -23,10 +23,8 @@ class HolidayPlanControllerTest extends TestCase
             'location' => 'Praia de Copacabana, Rio de Janeiro, Brasil',
             'participants' => 'Família'
         ];
-        $request = new HolidayPlanRequest($holidayPlanData);
-        $controller = new HolidayPlanController();
-        $response = $controller->store($request);
-        $this->assertEquals(201, $response->getStatusCode());
+        $response = $this->post('/api/v1/holiday-plans', $holidayPlanData);
+        $response->assertStatus(201);
         $this->assertDatabaseHas('holiday_plans', $holidayPlanData);
     }
 
@@ -38,10 +36,9 @@ class HolidayPlanControllerTest extends TestCase
             'location' => 'Praia de Copacabana, Rio de Janeiro, Brasil',
             'participants' => 'Família'
         ];
-        $request = new HolidayPlanRequest($holidayPlanData);
-        $controller = new HolidayPlanController();
-        $response = $controller->store($request);
-        $this->assertEquals(422, $response->getStatusCode());
+
+        $response = $this->post('/api/v1/holiday-plans', $holidayPlanData);
+        $response->assertStatus(422);
         $this->assertDatabaseMissing('holiday_plans', $holidayPlanData);
     }
 
@@ -64,20 +61,20 @@ class HolidayPlanControllerTest extends TestCase
             'location' => 'Praia de Copacabana, Rio de Janeiro, Brasil',
             'participants' => 'Família'
         ];
-        $request = new HolidayPlanRequest($holidayPlanData);
-        $controller = new HolidayPlanController();
-        $response = $controller->update($request, $holidayPlan->id);
-        $this->assertEquals(200, $response->getStatusCode());
+
+        $response = $this->put('/api/v1/holiday-plans/' . $holidayPlan->id, $holidayPlanData);
+        $response->assertStatus(200);
         $this->assertDatabaseHas('holiday_plans', $holidayPlanData);
     }
 
     public function test_it_can_list_all_holiday_plans()
     {
         $holidayPlans = HolidayPlan::factory()->count(5)->create();
-        $controller = new HolidayPlanController();
-        $response = $controller->index();
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertCount(5, $response->getData());
+
+        $response = $this->get('/api/v1/holiday-plans');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(5, 'data');
     }
 
     public function test_it_can_destroy_a_holiday_plan()
