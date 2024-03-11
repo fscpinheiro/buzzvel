@@ -48,6 +48,7 @@ c. Para o metodo store e update o body deve ser json, por exemplo:
     "location": "Brasil",
     "participants": "Família"
 }
+```
 
 ## Testes
 
