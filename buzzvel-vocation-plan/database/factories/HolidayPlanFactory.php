@@ -21,7 +21,19 @@ class HolidayPlanFactory extends Factory
             'description' => $this->faker->paragraph,
             'date' => $this->faker->date,
             'location' => $this->faker->address,
-            'participants' => $this->faker->name,
+            'participants' => $this->generateParticipants(),
         ];
+    }
+
+    private function generateParticipants()
+    {
+        $participants = [];
+        $numParticipants = rand(1, 5);
+
+        for ($i = 0; $i < $numParticipants; $i++) {
+            $participants[] = $this->faker->name;
+        }
+
+        return implode(', ', $participants);
     }
 }
