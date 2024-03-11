@@ -7,6 +7,7 @@ use App\Models\HolidayPlan;
 use App\Http\Requests\HolidayPlanRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PDF;
+use Illuminate\Support\Facades\Log;
 
 class HolidayPlanController extends Controller
 {
@@ -28,8 +29,15 @@ class HolidayPlanController extends Controller
 
     public function store(HolidayPlanRequest $request)
     {
-        $holidayPlan = HolidayPlan::create($request->validated());
-        return response()->json(['message' => 'Holiday plan created successfully', 'data' => $holidayPlan], 201);
+        Log::info('Store method called', ['request' => $request->all()]);
+
+        try {
+            $holidayPlan = HolidayPlan::create($request->validated());
+            return response()->json(['message' => 'Holiday plan created successfully', 'data' => $holidayPlan], 201);
+        } catch (\Exception $e) {
+            Log::error('Error creating holiday plan', ['error' => $e->getMessage()]);
+            throw $e;
+        }
     }
 
     public function update(HolidayPlanRequest $request, $id)

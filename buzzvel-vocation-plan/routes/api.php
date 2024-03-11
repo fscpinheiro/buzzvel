@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthenticationController;
+use App\Http\Controllers\HolidayPlanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,10 @@ use App\Http\Controllers\Api\AuthenticationController;
 //    return $request->user();
 //});
 
-Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
+Route::prefix('v1')->group(function () {
     Route::post('login', [AuthenticationController::class, 'store']);
     Route::post('logout', [AuthenticationController::class, 'destroy'])->middleware('auth:api');
 
-    Route::apiResource('holiday-plans', 'HolidayPlanController');
-    Route::post('holiday-plans/{id}/pdf', 'HolidayPlanController@generatePDF');
+    Route::apiResource('holiday-plans', HolidayPlanController::class);
+    Route::post('holiday-plans/{id}/pdf', [HolidayPlanController::class, 'generatePDF']);
 });
