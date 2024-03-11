@@ -17,22 +17,27 @@ Este projeto é uma API RESTful construída com Laravel para gerenciar planos de
 2. Navegue até o diretório do projeto.
 3. Execute `docker-compose up -d --build` para iniciar os serviços.
 4. Execute `docker exec setup-php composer install` para instalar as dependências do projeto.
-5. Execute `docker exec setup-php php artisan migrate` para executar as migrações do banco de dados.
+5. Execute `docker exec setup-php php artisan migrate:fresh --seed` para executar as migrações e popular o banco com dados.
 
 ## Uso
 
 A API possui os seguintes endpoints:
 
-- `POST /api/holiday-plans`: Cria um novo plano de férias.
-- `GET /api/holiday-plans`: Recupera todos os planos de férias.
-- `GET /api/holiday-plans/{id}`: Recupera um plano de férias específico pelo ID.
-- `PUT /api/holiday-plans/{id}`: Atualiza um plano de férias existente.
-- `DELETE /api/holiday-plans/{id}`: Deleta um plano de férias.
-- `POST /api/holiday-plans/{id}/pdf`: Gera um PDF para um plano de férias específico.
+- `POST /api/v1/holiday-plans`: Cria um novo plano de férias.
+- `GET /api/v1/holiday-plans`: Recupera todos os planos de férias.
+- `GET /api/v1/holiday-plans/{id}`: Recupera um plano de férias específico pelo ID.
+- `PUT /api/v1/holiday-plans/{id}`: Atualiza um plano de férias existente.
+- `DELETE /api/v1/holiday-plans/{id}`: Deleta um plano de férias.
+- `POST /api/v1/holiday-plans/{id}/pdf`: Gera um PDF para um plano de férias específico.
+
+## Autenticação 
+
+Se você fez o comando php artisan migrate:fresh --seed, poderá utilizar o usuario definido dentro de UsersTableSeeder.php
+O usuário por padrã para testes é fscpinheiro@gmail.com e senha 12345678
 
 ## Testes
 
 Para executar os testes unitários, execute o seguinte comando:
 
 ```bash
-docker exec setup-php vendor/bin/phpunit
+php artisan test tests/Feature/Unit/Controller/HolidayPlanControllerTest.php
