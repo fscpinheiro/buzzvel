@@ -18,6 +18,7 @@ Este projeto é uma API RESTful construída com Laravel para gerenciar planos de
 3. Execute `docker-compose up -d --build` para iniciar os serviços.
 4. Execute `docker exec setup-php composer install` para instalar as dependências do projeto.
 5. Execute `docker exec setup-php php artisan migrate:fresh --seed` para executar as migrações e popular o banco com dados.
+6. Execute `docker exec setup-php php artisan passport:install` para configurar o Passport.
 
 ## Uso
 
