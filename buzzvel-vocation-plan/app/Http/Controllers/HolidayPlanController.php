@@ -30,14 +30,9 @@ class HolidayPlanController extends Controller
     public function store(HolidayPlanRequest $request)
     {
         Log::info('Store method called', ['request' => $request->all()]);
-
-        try {
-            $holidayPlan = HolidayPlan::create($request->validated());
-            return response()->json(['message' => 'Holiday plan created successfully', 'data' => $holidayPlan], 201);
-        } catch (\Exception $e) {
-            Log::error('Error creating holiday plan', ['error' => $e->getMessage()]);
-            throw $e;
-        }
+        $validated = $request->validated();
+        $holidayPlan = HolidayPlan::create($validated);
+        return response()->json(['message' => 'Holiday plan created successfully', 'data' => $holidayPlan], 201);
     }
 
     public function update(HolidayPlanRequest $request, $id)
