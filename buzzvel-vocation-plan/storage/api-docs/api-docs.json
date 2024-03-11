@@ -1,0 +1,225 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "BUZZVEL TESTE",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/login": {
+            "post": {
+                "summary": "Authenticate a user and return a token",
+                "operationId": "a377553fa412f64a7282cc78a9aee69c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Failed to authenticate"
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "summary": "Logout a user and revoke their token",
+                "operationId": "c332693e956e96e9f5bdb228856f8d8c",
+                "responses": {
+                    "200": {
+                        "description": "Logged out successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/v1/holiday-plans": {
+            "get": {
+                "summary": "Retrieve all holiday plans",
+                "operationId": "8592d7c198cf8dd4951094cb62b6f9e3",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new holiday plan",
+                "operationId": "c164290bb4100b815755f25ee0ebe09f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HolidayPlan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Holiday plan created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/v1/holiday-plans/{id}": {
+            "get": {
+                "summary": "Retrieve a specific holiday plan by ID",
+                "operationId": "e2350921ead947f60706730aed57fef6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the holiday plan to return",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Holiday plan not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update an existing holiday plan",
+                "operationId": "5592a3f2ae36c6bfba8d8b2235bf9769",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the holiday plan to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HolidayPlan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Holiday plan updated successfully"
+                    },
+                    "404": {
+                        "description": "Holiday plan not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a holiday plan",
+                "operationId": "9e0191ddef1ddd4d99f10090eb13f3b4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the holiday plan to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Holiday plan deleted successfully"
+                    },
+                    "404": {
+                        "description": "Holiday plan not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/holiday-plans/{id}/pdf": {
+            "post": {
+                "summary": "Generate PDF for a specific holiday plan",
+                "operationId": "3731cee30c8fea93c6be6463c7f2f272",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the holiday plan to generate PDF",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PDF generated successfully"
+                    },
+                    "404": {
+                        "description": "Holiday plan not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HolidayPlan": {
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "participants": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
